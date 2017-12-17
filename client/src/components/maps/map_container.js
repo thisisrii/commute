@@ -3,9 +3,13 @@ import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 
 export class MapContainer extends Component {
   render() {
+    const style = {
+      width: '100vw',
+      height: '100vh'
+    }
       return (
-        <Map google={this.props.google} zoom={14}>
-
+        <div style={style}>
+        <Map google={this.props.google} zoom={14} onClick={this.onMapClick}>
           <Marker onClick={this.onMarkerClick}
                   name={'Current location'} />
 
@@ -15,8 +19,21 @@ export class MapContainer extends Component {
               </div>
           </InfoWindow>
         </Map>
+        </div>
       );
     }
+
+   onMapClick=(e)=>{
+     console.log(e);
+     let lat = e.initialCenter.lat;
+     let lng = e.initialCenter.lng;
+     let geo = navigator.geolocation.getCurrentPosition(function(position) {
+      console.log('current location')
+      console.log('lat' + position.coords.latitude)  
+      console.log('longs' + position.coords.longitude) 
+      console.log(`on click long${lng} lat ${lat}`)
+    });
+   } 
 }
 
 export default GoogleApiWrapper({

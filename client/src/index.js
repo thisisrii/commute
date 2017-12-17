@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import DriverDetail from './components/driver_detail';
 import DriverList from './components/driver_list';
 import MapContainer from './components/maps/map_container';
-import GoogleMap from './components/maps/google_maps';
 
 export default class App extends Component {
   constructor(props){
@@ -21,15 +20,16 @@ export default class App extends Component {
   render() {
     return (
       <div id="driver-container">
-        <form id="search" onSubmit={this.handleSubmit}>
+          <form id="search" onSubmit={this.handleSubmit}>
           <label>Enter your Latitude:</label>
           <input type="text" ref="lat" placeholder="latitude" required />
           <label>Enter your Longitude:</label>
           <input type="text" ref="lng" placeholder="longitude" required />
           <input type="submit" value="Find Drivers" />
         </form>
-
+        <div className="container">
         <MapContainer currentLocation={this.state.currentLocation} />
+        </div>
         <DriverDetail driver = {this.state.selectedDriver}/>
         <DriverList
           onDriverSelect={selectedD=>this.setState({selectedDriver:selectedD})}
@@ -55,4 +55,4 @@ export default class App extends Component {
   }
 }
 
-ReactDOM.render(<App />, document.querySelector('.container'));
+ReactDOM.render(<App />, document.querySelector('.drivers'));
