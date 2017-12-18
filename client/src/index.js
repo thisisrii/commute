@@ -15,20 +15,33 @@ export default class App extends Component {
         long: -33.91928
       }
     }
+
+    this.currentUserLocation = this.currentUserLocation.bind(this);
+  }
+
+  currentUserLocation(userlong,userLat){
+    this.setState({
+      currentLocation: {
+          lat: userLat,
+          long: userlong
+      }
+    });
   }
 
   render() {
     return (
       <div id="driver-container">
-          <form id="search" onSubmit={this.handleSubmit}>
-          <label>Enter your Latitude:</label>
-          <input type="text" ref="lat" placeholder="latitude" required />
-          <label>Enter your Longitude:</label>
-          <input type="text" ref="lng" placeholder="longitude" required />
-          <input type="submit" value="Find Drivers" />
-        </form>
-        <div className="container">
-        <MapContainer currentLocation={this.state.currentLocation} />
+      <div>{this.state.currentLocation.lat}</div>
+      <div>{this.state.currentLocation.long}</div>
+        <div className=".container">
+          <div className="row">
+            <div className="col-sm-9 col-md-6 col-lg-8">
+              <MapContainer 
+              currentLocation={this.state.currentLocation} 
+              currentUserLocation={this.currentUserLocation}
+              />
+            </div>
+          </div>
         </div>
         <DriverDetail driver = {this.state.selectedDriver}/>
         <DriverList
@@ -54,5 +67,15 @@ export default class App extends Component {
     });
   }
 }
+
+/*
+          <form id="search" onSubmit={this.handleSubmit}>
+          <label>Enter your Latitude:</label>
+          <input type="text" ref="lat" placeholder="latitude" required />
+          <label>Enter your Longitude:</label>
+          <input type="text" ref="lng" placeholder="longitude" required />
+          <input type="submit" value="Find Drivers" />
+        </form>
+*/
 
 ReactDOM.render(<App />, document.querySelector('.drivers'));

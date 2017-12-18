@@ -2,7 +2,15 @@ import React, {Component} from 'react';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 
 export class MapContainer extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      userLocation:this.props.currentUserLocation //function ot set state of index.js
+    }
+  }
+  
   render() {
+   // const userLocation = this.props.currentUserLocation;
     const style = {
       width: '100vw',
       height: '100vh'
@@ -27,13 +35,15 @@ export class MapContainer extends Component {
      console.log(e);
      let lat = e.initialCenter.lat;
      let lng = e.initialCenter.lng;
-     let geo = navigator.geolocation.getCurrentPosition(function(position) {
+     this.state.userLocation(lng,lat)
+     console.log(`on click long${lng} lat ${lat}`)
+     /*let geo = navigator.geolocation.getCurrentPosition(function(position) {
       console.log('current location')
       console.log('lat' + position.coords.latitude)  
       console.log('longs' + position.coords.longitude) 
-      console.log(`on click long${lng} lat ${lat}`)
+    
     });
-   } 
+  */} 
 }
 
 export default GoogleApiWrapper({
